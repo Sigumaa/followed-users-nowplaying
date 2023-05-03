@@ -52,15 +52,23 @@ const {
   LASTFM_USER: user,
 } = process.env;
 
-async function GetFriends(): Promise<UserData[] | null> {
+async function GetFriends(): Promise<UserData[] | { message: string }> {
+
+  if (!key || !user) {
+    console.error("Missing LASTFM_API_KEY or LASTFM_USER!!!");
+    return { message: "Internal server error."}
+  }
+
   const url = `https://ws.audioscrobbler.com/2.0/?method=user.getfriends&user=${user}&api_key=${key}&format=json`;
   const res = await fetch(url);
   const friends: FriendsData = await res.json();
+
   if (!friends.friends) {
-    return null;
+    return { message: "User not found." };
   }
+
   if (friends.friends['@attr'].total === "0") {
-    return null;
+    return { message: "User has no friends." };
   }
 
   return friends.friends.user.map((user) => {
