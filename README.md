@@ -1,7 +1,8 @@
-follower NowPlaying
+Followed-Users-NowPlaying
 ===================
 
 
 ```bash
+pnpm i
 pnpm dev
 ```
