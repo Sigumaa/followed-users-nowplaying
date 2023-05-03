@@ -67,7 +67,7 @@ async function GetFriends(): Promise<UserData[] | null> {
       return {
         name: user.name,
         url: user.url,
-        image: user.image[1]['#text'],
+        image: user.image[2]['#text'],
       };
     }
   );
@@ -79,9 +79,10 @@ export default async function handler(
   res: NextApiResponse<UserData[] | { message: string }>
 ) {
   try {
+    if (!key || !user) {
+      console.error("Missing LASTFM_API_KEY or LASTFM_USER!!!");
+    }
     const friends = await GetFriends();
-
-    console.log(friends)
     if (friends) {
       res.status(200).json(friends);
     } else {

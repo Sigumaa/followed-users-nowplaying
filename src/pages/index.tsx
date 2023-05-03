@@ -1,5 +1,6 @@
 import React from 'react';
 import useSWR from "swr";
+import Music from './music';
 
 type UserData = {
   name: string;
@@ -13,16 +14,17 @@ export default function Home() {
 
   if (error) return <div>failed to load</div>
   if (!data) return <div>loading...</div>
+
+
   return (
     <div>
-      <h1>Followers</h1>
+      <img src={"https://lastfm.freetls.fastly.net/i/u/avatar170s/fb715f02eab6d7b0f5f13632cf2566f9.png"} alt={"shiyui"} style={{verticalAlign: "top"}} />
+      <Music user={"shiyui"} />
       <hr />
       {data.map((user) => (
         <div>
-          <img src={user.image !== "" ? user.image : "https://lastfm.freetls.fastly.net/i/u/300x300/2a96cbd8b46e442fc41c2b86b821562f.jpg"} width="100" height="100"  alt={user.name}/>
-          <div style={{display: "inline-block", marginLeft: "0.5rem"}}>
-            <p><a href={user.url} style={{marginLeft: "0.5rem", fontSize: "1rem", textDecoration: "none",paddingBottom: "3rem"}}>{user.name}</a> Now Playing</p>
-          </div>
+          <img src={user.image !== "" ? user.image : "https://lastfm.freetls.fastly.net/i/u/avatar170s/818148bf682d429dc215c1705eb27b98.png"} alt={user.name} style={{verticalAlign: "top"}} />
+          <Music user={user.name}  />
           <hr />
         </div>
       ))}
